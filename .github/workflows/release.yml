@@ -15,52 +15,65 @@ jobs:
 
       # Checkout Local Repository
       - name: Checkout
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+        uses: actions/checkout@v5
 
       # Get the Package version based on the package.json file
       - name: Get Version
-        id: version
-        uses: zoexx/github-action-json-file-properties@b9f36ce6ee6fe2680cd3c32b2c62e22eade7e590
-        with: 
-            file_path: "${{ env.packagePath }}/package.json"
-            prop_path: "version"
-    
-      # Configure the Environment Variables needed for releasing the Package
-      - name: Set Environment Variables
         run: |
-          echo "zipFile=com.makaria122.re-world-maker-${{ steps.version.outputs.value }}.zip" >> $GITHUB_ENV
-          echo "unityPackage=com.makaria122.re-world-maker-${{ steps.version.outputs.value }}.unitypackage" >> $GITHUB_ENV
-          echo "version=${{ steps.version.outputs.value }}" >> $GITHUB_ENV
+          version=$(jq -r '.version' "${{ env.packagePath }}/package.json")
+          test -n "$version"
+          test "$version" != "null"
+          echo "zipFile=com.makaria122.re-world-maker-${version}.zip" >> "$GITHUB_ENV"
+          echo "unityPackage=com.makaria122.re-world-maker-${version}.unitypackage" >> "$GITHUB_ENV"
+          echo "version=${version}" >> "$GITHUB_ENV"
 
       # Zip the Package for release
       - name: Create Package Zip
         working-directory: "${{ env.packagePath }}"
         run: zip -r "${{ github.workspace }}/${{ env.zipFile }}" .
       
-      # Build a list of .meta files for future use
-      - name: Track Package Meta Files
-        run: find "${{ env.packagePath }}/" -name \*.meta >> metaList
-      
       # Make a UnityPackage version of the Package for release
       - name: Create UnityPackage
-        uses: pCYSl5EDgo/create-unitypackage@v1.2.3
-        with:
-          package-path: ${{ env.unityPackage }}
-          include-files: metaList
-      
-      # Make a release tag of the version from the package.json file 
-      - name: Create Tag
-        id: tag_version
-        uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
-        with:
-          tag: "${{ env.version }}"
+        shell: python
+        run: |
+          import io
+          import os
+          import pathlib
+          import re
+          import tarfile
+
+          package = pathlib.Path(os.environ["packagePath"])
+          output = pathlib.Path(os.environ["unityPackage"])
+
+          with tarfile.open(output, "w:gz", format=tarfile.GNU_FORMAT) as archive:
+              for meta in sorted(package.rglob("*.meta")):
+                  text = meta.read_text(encoding="utf-8")
+                  match = re.search(r"^guid:\s*([0-9a-fA-F]+)\s*$", text, re.MULTILINE)
+                  if not match:
+                      raise RuntimeError(f"GUID not found in {meta}")
+
+                  guid = match.group(1)
+                  asset = meta.with_suffix("")
+                  pathname = asset.as_posix().encode("utf-8")
+
+                  archive.add(meta, arcname=f"{guid}/asset.meta", recursive=False)
+                  if asset.is_file():
+                      archive.add(asset, arcname=f"{guid}/asset", recursive=False)
+
+                  info = tarfile.TarInfo(f"{guid}/pathname")
+                  info.size = len(pathname)
+                  info.mode = 0o644
+                  archive.addfile(info, io.BytesIO(pathname))
       
       # Publish the Release to GitHub
       - name: Make Release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
-        with:
-          files: |
-            ${{ env.zipFile }}
-            ${{ env.unityPackage }}
-            ${{ env.packagePath }}/package.json
-          tag_name: ${{ env.version }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ env.version }}" \
+            "${{ env.zipFile }}" \
+            "${{ env.unityPackage }}" \
+            "${{ env.packagePath }}/package.json" \
+            --target "${{ github.sha }}" \
+            --title "RE World Maker ${{ env.version }}" \
+            --generate-notes
