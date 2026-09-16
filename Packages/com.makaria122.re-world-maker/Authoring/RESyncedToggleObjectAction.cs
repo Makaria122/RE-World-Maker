@@ -1,6 +1,6 @@
 using UnityEngine;
 namespace REWorldMaker
 {
-    [AddComponentMenu("RE World Maker/Actions/REW Synced Toggle Object Action"), DisallowMultipleComponent]
+    [AddComponentMenu("RE World Maker/Actions/REW Action Synced Toggle Object"), DisallowMultipleComponent]
     public sealed class RESyncedToggleObjectAction : REAction { public GameObject[] targetObjects; public bool defaultEnabled = true; }
 }

@@ -2,7 +2,7 @@
 
 RE World Makerは、VRChatワールド用のギミックをコンポーネントの追加だけで作りやすくするツールです。
 
-`REW Interact Trigger`、`REW Pickup Use Trigger`などのTriggerと、`REW Prop Toggle`、`REW Audio Action`などのActionを同じGameObjectへ追加するだけで動作します。Udon Behaviour同士を手動で配線する必要はありません。
+`REW Trigger Interact`、`REW Trigger Pickup Use`などのTriggerと、`REW Action Prop Toggle`、`REW Action Audio`などのActionを同じGameObjectへ追加するだけで動作します。Udon Behaviour同士を手動で配線する必要はありません。
 
 ## 特徴
 

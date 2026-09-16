@@ -3,7 +3,7 @@ namespace REWorldMaker
 {
     public enum REInitialState { UseCurrentState, StartOn, StartOff }
 
-    [AddComponentMenu("RE World Maker/Actions/REW Prop Toggle"), DisallowMultipleComponent]
+    [AddComponentMenu("RE World Maker/Actions/REW Action Prop Toggle"), DisallowMultipleComponent]
     public sealed class REPropToggle : REAction
     {
         public GameObject[] targetObjects;

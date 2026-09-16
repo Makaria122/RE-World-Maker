@@ -72,25 +72,25 @@ TriggerとActionの接続作業は必要ありません。同じGameObjectにあ
 ■ Trigger一覧
 ----------------
 
-● REW Interact Trigger
+● REW Trigger Interact
 オブジェクトを指してInteractしたときにActionを実行します。
 
-● REW Player Trigger
+● REW Trigger Player
 プレイヤーが範囲へ入ったとき、または出たときにActionを実行します。
 Box ColliderとIs Triggerは自動的に設定されます。
 
-● REW Pickup Use Trigger
+● REW Trigger Pickup Use
 Pickupを持った状態でUseを押したときにActionを実行します。
 Box Collider、Rigidbody、VRC Pickupが自動的に追加されます。
 
-● REW World Start Trigger
+● REW Trigger World Start
 プレイヤーがワールドへ入ったあとにActionを自動実行します。遅延時間も設定できます。
 
 
 ■ Action一覧
 ----------------
 
-● REW Prop Toggle
+● REW Action Prop Toggle
 指定したGameObjectを表示・非表示にします。
 
 Operation:
@@ -98,7 +98,7 @@ Operation:
 ・Enable：オンにします。
 ・Disable：オフにします。
 
-● REW Audio Action
+● REW Action Audio
 Audio Sourceを再生、停止、または切り替えます。
 
 簡単設定では、次の項目を設定できます。
@@ -112,21 +112,21 @@ Audio Sourceを再生、停止、または切り替えます。
 既存のAudio Sourceがある場合は、そのAudio Sourceを使用します。追加しただけでは既存設定を上書きしません。
 VRC Spatial Audio Sourceがない場合は、Inspectorの追加ボタンを使用してください。
 
-● REW Animator Parameter Action
+● REW Action Animator Parameter
 AnimatorのParameterを変更します。
 簡単設定ではAnimatorを指定したあと、Parameterを一覧から選択できます。型は自動判定されます。
 
-● REW Teleport Action
+● REW Action Teleport
 ローカルプレイヤーを指定したTransformへテレポートします。
 簡単設定の「移動先を作成」ボタンでDestinationを作成できます。
 
-● REW Toggle Object Action
+● REW Action Toggle Object
 指定したGameObjectをローカルで表示・非表示にする旧方式のActionです。
-新しく作る場合はREW Prop Toggleを推奨します。
+新しく作る場合はREW Action Prop Toggleを推奨します。
 
-● REW Synced Toggle Object Action
+● REW Action Synced Toggle Object
 表示状態を同期する旧方式のActionです。
-新しく作る場合は「REW Prop Toggle + REW Synced」を推奨します。
+新しく作る場合は「REW Action Prop Toggle + REW Synced」を推奨します。
 
 
 ■ REW Synced
@@ -136,8 +136,8 @@ REW Syncedは、同じGameObjectにある対応済みREW Actionの状態を全�
 途中参加者にも現在の状態が反映されます。
 
 現在対応しているAction:
-・REW Prop Toggle
-・REW Audio Action
+・REW Action Prop Toggle
+・REW Action Audio
 
 REW Syncedが同期するのはREW関連の状態だけです。
 GameObjectの位置、回転、Rigidbody、Pickupの移動は同期しません。
@@ -146,17 +146,17 @@ Pickupの位置と回転も同期する場合は、同じPickup ObjectへVRC Obj
 REWはManual同期処理を「REW Network State」という非表示の子GameObjectへ自動分離するため、次の役割分担で使用できます。
 
 ・VRC Object Sync：Pickupの位置、回転、物理挙動
-・REW Synced：REW Prop ToggleやREW Audio Actionの状態
+・REW Synced：REW Action Prop ToggleやREW Action Audioの状態
 
 
 ■ 作例1：Interactでオブジェクトを切り替える
 ----------------
 
 Switch
-・REW Interact Trigger
-・REW Prop Toggle
+・REW Trigger Interact
+・REW Action Prop Toggle
 
-REW Prop ToggleのTarget Objectsに切り替えたいGameObjectを指定します。
+REW Action Prop ToggleのTarget Objectsに切り替えたいGameObjectを指定します。
 全員へ同期する場合はREW Syncedも追加します。
 
 
@@ -166,11 +166,11 @@ REW Prop ToggleのTarget Objectsに切り替えたいGameObjectを指定しま�
 Music Switch
 ・Audio Source
 ・VRC Spatial Audio Source
-・REW Interact Trigger
-・REW Audio Action
+・REW Trigger Interact
+・REW Action Audio
 ・REW Synced
 
-REW Audio ActionでAudio Clipと再生方法を設定します。
+REW Action AudioでAudio Clipと再生方法を設定します。
 REW Syncedにより、途中参加者を含む全員へ再生状態と再生位置が反映されます。
 
 
@@ -178,12 +178,12 @@ REW Syncedにより、途中参加者を含む全員へ再生状態と再生位�
 ----------------
 
 Flashlight
-・REW Pickup Use Trigger
-・REW Prop Toggle
+・REW Trigger Pickup Use
+・REW Action Prop Toggle
 ・REW Synced（全員へ状態を見せる場合）
 ・VRC Object Sync（Pickupの位置も同期する場合）
 
-REW Prop ToggleのTarget ObjectsにLightのGameObjectを指定し、OperationをToggleにします。
+REW Action Prop ToggleのTarget ObjectsにLightのGameObjectを指定し、OperationをToggleにします。
 
 
 ■ 注意事項
