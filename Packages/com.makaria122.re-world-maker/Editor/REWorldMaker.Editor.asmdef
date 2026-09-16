@@ -1,0 +1,27 @@
+{
+  "name": "REWorldMaker.Editor",
+  "rootNamespace": "REWorldMaker.Editor",
+  "references": [
+    "REWorldMaker.Runtime",
+    "UdonSharp.Editor",
+    "UdonSharp.Runtime",
+    "VRC.Udon",
+    "VRC.Udon.Editor",
+    "VRC.SDKBase",
+    "VRC.SDK3",
+    "VRC.SDKBase.Editor",
+    "VRC.SDK3.Editor",
+    "VRC.SDKBase.Editor.BuildPipeline"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

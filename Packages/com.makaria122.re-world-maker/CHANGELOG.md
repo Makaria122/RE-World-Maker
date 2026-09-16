@@ -2,6 +2,13 @@
 
 All notable changes to RE World Maker are documented here.
 
+## [0.1.2] - 2026-09-16
+
+### Fixed
+
+- Added Unity runtime and editor assembly definitions so Authoring components are compiled and visible to the Editor when installed as a VPM package.
+- Added the matching UdonSharp Assembly Definition so packaged UdonSharp runtime behaviours remain compilable.
+
 ## [0.1.1] - 2026-09-16
 
 ### Changed
