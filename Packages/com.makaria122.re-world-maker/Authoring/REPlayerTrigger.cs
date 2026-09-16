@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace REWorldMaker
 {
-    [AddComponentMenu("RE World Maker/Triggers/REW Player Trigger"), DisallowMultipleComponent, RequireComponent(typeof(BoxCollider))]
+    [AddComponentMenu("RE World Maker/Triggers/REW Trigger Player"), DisallowMultipleComponent, RequireComponent(typeof(BoxCollider))]
     public sealed class REPlayerTrigger : RETrigger
     {
         public bool executeOnEnter = true;

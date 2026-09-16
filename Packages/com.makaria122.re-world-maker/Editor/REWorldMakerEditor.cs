@@ -392,7 +392,7 @@ namespace REWorldMaker.Editor
                     if (actions[i] is REPropToggle || actions[i] is REAudioAction) hasSupportedAction = true;
                     else hasUnsupportedAction = true;
                 }
-                if (!hasSupportedAction) EditorGUILayout.HelpBox(REWorldMakerLocalization.Text("Add REW Prop Toggle or REW Audio Action to use REW Synced.", "REW Syncedを使用するには、REW Prop ToggleまたはREW Audio Actionを追加してください。", "REW Synced를 사용하려면 REW Prop Toggle 또는 REW Audio Action을 추가하세요.", "要使用REW Synced，请添加REW Prop Toggle或REW Audio Action。"), MessageType.Warning);
+                if (!hasSupportedAction) EditorGUILayout.HelpBox(REWorldMakerLocalization.Text("Add REW Action Prop Toggle or REW Action Audio to use REW Synced.", "REW Syncedを使用するには、REW Action Prop ToggleまたはREW Action Audioを追加してください。", "REW Synced를 사용하려면 REW Action Prop Toggle 또는 REW Action Audio를 추가하세요.", "要使用REW Synced，请添加REW Action Prop Toggle或REW Action Audio。"), MessageType.Warning);
                 if (hasUnsupportedAction) EditorGUILayout.HelpBox(REWorldMakerLocalization.Text("Some Actions on this GameObject do not support REW Synced yet and will remain local.", "このGameObjectにある一部のActionはまだREW Syncedに対応していないため、ローカル動作になります。", "이 GameObject의 일부 Action은 아직 REW Synced를 지원하지 않으므로 로컬로 작동합니다.", "此GameObject上的部分Action尚不支持REW Synced，将保持本地运行。"), MessageType.Warning);
                 if (REWorldMakerLocalization.EasySettingsEnabled && component.GetComponent<VRCPickup>() != null && component.GetComponent<VRCObjectSync>() == null)
                 {
