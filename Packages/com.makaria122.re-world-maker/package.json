@@ -1,0 +1,26 @@
+{
+  "name": "com.makaria122.re-world-maker",
+  "displayName": "RE World Maker",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "description": "Create common VRChat world interactions by adding easy-to-use REW Trigger, Action, and Sync components—no manual Udon wiring required.",
+  "author": {
+    "name": "Makaria122",
+    "url": "https://github.com/Makaria122"
+  },
+  "documentationUrl": "https://github.com/Makaria122/RE-World-Maker#readme",
+  "changelogUrl": "https://github.com/Makaria122/RE-World-Maker/releases",
+  "keywords": [
+    "VRChat",
+    "World",
+    "UdonSharp",
+    "REW",
+    "No-Code"
+  ],
+  "vpmDependencies": {
+    "com.vrchat.worlds": ">=3.10.4"
+  },
+  "legacyFolders": {
+    "Assets/RE World Maker": ""
+  }
+}
