@@ -21,6 +21,16 @@ RE World Makerは、VRChatワールド用のギミックをコンポーネント
 - VRChat SDK - Worlds 3.10.4以上
 - UdonSharp（VRChat Worlds SDKに含まれます）
 
+## VCC / VPMからインストール
+
+1. VCCのSettingsでCommunity Repositoriesを開きます。
+2. `https://makaria122.github.io/RE-World-Maker/index.json`を追加します。
+3. 対象のWorldプロジェクトでManage Projectを開きます。
+4. `RE World Maker`を追加します。
+5. Unityを開き、Add Componentで`REW`と検索します。
+
+このURLは、最初のGitHub ReleaseとGitHub Pagesの公開後に利用可能になります。
+
 ## 基本的な使い方
 
 1. GameObjectを選択します。
@@ -30,3 +40,11 @@ RE World Makerは、VRChatワールド用のギミックをコンポーネント
 5. 全員へ同期する場合はREW Syncedも追加します。
 
 TriggerとActionの手動接続は必要ありません。
+
+## ドキュメント
+
+詳しい日本語ガイドは、パッケージ内の`Documentation~/RE World Maker - 使い方.txt`に収録しています。
+
+## ライセンス
+
+ライセンスは公開者が決定後、このリポジトリへ追加します。

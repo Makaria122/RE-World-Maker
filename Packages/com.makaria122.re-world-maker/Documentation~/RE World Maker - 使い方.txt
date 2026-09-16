@@ -1,0 +1,210 @@
+RE World Maker v0.1.0
+=====================
+
+RE World Makerは、VRChatワールド用のギミックをAdd Componentだけで作りやすくするツールです。
+基本的には、1つのGameObjectへ「Trigger」と「Action」を追加します。
+
+
+■ 動作確認環境
+----------------
+
+・Unity 2022.3.22f1
+・VRChat SDK - Worlds 3.10.4
+・UdonSharp（VRChat Worlds SDKに含まれます）
+
+先にVRChat Creator CompanionでWorldプロジェクトを作成し、VRChat Worlds SDKが正常に導入された状態で使用してください。
+
+
+■ インストール
+----------------
+
+1. UnityでVRChatのWorldプロジェクトを開きます。
+2. 「RE_World_Maker_v0.1.0.unitypackage」をダブルクリックします。
+3. Import Unity Package画面で、すべてにチェックが入った状態でImportを押します。
+4. Unityのコンパイルが終わるまで待ちます。
+5. GameObjectを選択し、Inspectorの「Add Component」で「REW」と検索します。
+
+REWコンポーネントが表示されれば導入完了です。
+
+
+■ 言語設定
+----------------
+
+Unity上部のメニューから変更できます。
+
+RE World Maker > Language
+
+・Auto (System Language)
+・日本語
+・한국어
+・中文（简体）
+・English
+
+初期設定はAutoです。日本語、韓国語、中国語を自動判定し、それ以外では英語を使用します。
+変更されるのはREWコンポーネント内の説明、警告、ボタンなどです。コンポーネント名は英語のままです。
+
+
+■ 簡単設定
+----------------
+
+Unity上部の次の項目で、全REWコンポーネントの表示を切り替えられます。
+
+RE World Maker > Easy Settings (簡単設定)
+
+・チェックあり：初心者向けの簡単設定
+・チェックなし：すべての詳細設定
+
+初期状態はオンです。オフにしても、作成済みの設定は削除されません。
+
+
+■ 基本的な作り方
+----------------
+
+1. ギミック用のGameObjectを作成または選択します。
+2. Add Componentで「REW」と検索します。
+3. 実行条件となるTriggerを1つ追加します。
+4. 実行内容となるActionを同じGameObjectへ追加します。
+5. 全員へ同期したい場合だけ、REW Syncedを追加します。
+
+TriggerとActionの接続作業は必要ありません。同じGameObjectにあるActionが自動的に実行されます。
+
+
+■ Trigger一覧
+----------------
+
+● REW Interact Trigger
+オブジェクトを指してInteractしたときにActionを実行します。
+
+● REW Player Trigger
+プレイヤーが範囲へ入ったとき、または出たときにActionを実行します。
+Box ColliderとIs Triggerは自動的に設定されます。
+
+● REW Pickup Use Trigger
+Pickupを持った状態でUseを押したときにActionを実行します。
+Box Collider、Rigidbody、VRC Pickupが自動的に追加されます。
+
+● REW World Start Trigger
+プレイヤーがワールドへ入ったあとにActionを自動実行します。遅延時間も設定できます。
+
+
+■ Action一覧
+----------------
+
+● REW Prop Toggle
+指定したGameObjectを表示・非表示にします。
+
+Operation:
+・Toggle：実行するたびにオン・オフを切り替えます。
+・Enable：オンにします。
+・Disable：オフにします。
+
+● REW Audio Action
+Audio Sourceを再生、停止、または切り替えます。
+
+簡単設定では、次の項目を設定できます。
+・Audio Clip
+・再生操作
+・音量
+・ループ
+・Global 2D / Spatial 3D
+・3D音声が聞こえる最大距離
+
+既存のAudio Sourceがある場合は、そのAudio Sourceを使用します。追加しただけでは既存設定を上書きしません。
+VRC Spatial Audio Sourceがない場合は、Inspectorの追加ボタンを使用してください。
+
+● REW Animator Parameter Action
+AnimatorのParameterを変更します。
+簡単設定ではAnimatorを指定したあと、Parameterを一覧から選択できます。型は自動判定されます。
+
+● REW Teleport Action
+ローカルプレイヤーを指定したTransformへテレポートします。
+簡単設定の「移動先を作成」ボタンでDestinationを作成できます。
+
+● REW Toggle Object Action
+指定したGameObjectをローカルで表示・非表示にする旧方式のActionです。
+新しく作る場合はREW Prop Toggleを推奨します。
+
+● REW Synced Toggle Object Action
+表示状態を同期する旧方式のActionです。
+新しく作る場合は「REW Prop Toggle + REW Synced」を推奨します。
+
+
+■ REW Synced
+----------------
+
+REW Syncedは、同じGameObjectにある対応済みREW Actionの状態を全員へ同期します。
+途中参加者にも現在の状態が反映されます。
+
+現在対応しているAction:
+・REW Prop Toggle
+・REW Audio Action
+
+REW Syncedが同期するのはREW関連の状態だけです。
+GameObjectの位置、回転、Rigidbody、Pickupの移動は同期しません。
+
+Pickupの位置と回転も同期する場合は、同じPickup ObjectへVRC Object Syncを追加してください。
+REWはManual同期処理を「REW Network State」という非表示の子GameObjectへ自動分離するため、次の役割分担で使用できます。
+
+・VRC Object Sync：Pickupの位置、回転、物理挙動
+・REW Synced：REW Prop ToggleやREW Audio Actionの状態
+
+
+■ 作例1：Interactでオブジェクトを切り替える
+----------------
+
+Switch
+・REW Interact Trigger
+・REW Prop Toggle
+
+REW Prop ToggleのTarget Objectsに切り替えたいGameObjectを指定します。
+全員へ同期する場合はREW Syncedも追加します。
+
+
+■ 作例2：Interactで全員に音楽を流す
+----------------
+
+Music Switch
+・Audio Source
+・VRC Spatial Audio Source
+・REW Interact Trigger
+・REW Audio Action
+・REW Synced
+
+REW Audio ActionでAudio Clipと再生方法を設定します。
+REW Syncedにより、途中参加者を含む全員へ再生状態と再生位置が反映されます。
+
+
+■ 作例3：持ったアイテムのUseでライトを切り替える
+----------------
+
+Flashlight
+・REW Pickup Use Trigger
+・REW Prop Toggle
+・REW Synced（全員へ状態を見せる場合）
+・VRC Object Sync（Pickupの位置も同期する場合）
+
+REW Prop ToggleのTarget ObjectsにLightのGameObjectを指定し、OperationをToggleにします。
+
+
+■ 注意事項
+----------------
+
+・REWのTriggerとActionは、基本的に同じGameObjectへ追加してください。
+・自動生成されるUdonSharp RuntimeやREW Network Stateを手動で編集する必要はありません。
+・REW Syncedに未対応のActionはローカル動作になります。
+・Audio Sourceを3D音声として使う場合は、VRC Spatial Audio Sourceも設定してください。
+・アップロード前にVRChat SDKのBuild Panelを開き、赤いValidationエラーがないことを確認してください。
+・重要なワールドでは、VRChat SDKのBuild & Testで複数クライアントの同期確認を行ってください。
+
+
+■ アンインストール
+----------------
+
+REWコンポーネントを使用しているGameObjectから対象コンポーネントを外したあと、次のフォルダーを削除します。
+
+Assets/RE World Maker
+
+削除前にシーンやPrefabのバックアップを取ってください。
+
+
+以上
