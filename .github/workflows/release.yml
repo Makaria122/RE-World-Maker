@@ -70,10 +70,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ env.version }}" \
-            "${{ env.zipFile }}" \
-            "${{ env.unityPackage }}" \
-            "${{ env.packagePath }}/package.json" \
-            --target "${{ github.sha }}" \
-            --title "RE World Maker ${{ env.version }}" \
-            --generate-notes
+          if gh release view "${{ env.version }}" > /dev/null 2>&1; then
+            gh release upload "${{ env.version }}" \
+              "${{ env.zipFile }}" \
+              "${{ env.unityPackage }}" \
+              "${{ env.packagePath }}/package.json" \
+              --clobber
+          else
+            gh release create "${{ env.version }}" \
+              "${{ env.zipFile }}" \
+              "${{ env.unityPackage }}" \
+              "${{ env.packagePath }}/package.json" \
+              --target "${{ github.sha }}" \
+              --title "RE World Maker ${{ env.version }}" \
+              --generate-notes
+          fi
