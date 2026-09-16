@@ -1,7 +1,7 @@
 {
   "name": "com.makaria122.re-world-maker",
   "displayName": "RE World Maker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "unity": "2022.3",
   "description": "Create common VRChat world interactions by adding easy-to-use REW Trigger, Action, and Sync components—no manual Udon wiring required.",
   "license": "MIT",
